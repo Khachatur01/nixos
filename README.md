@@ -2,7 +2,9 @@
 
 ```
 flake.nix                  # inputs + mkHost helper, one entry per host
-modules/nixos/             # shared modules imported by every host
+modules/nixos/             # shared modules imported by every host (all are workstations)
+modules/nixos/desktop/     # desktop environments; each host imports one (plasma or gnome)
+modules/nixos/programs/    # apps/services every host gets (steam, ollama, kdeconnect)
 hosts/<hostname>/          # host-specific config + hardware-configuration.nix
 ```
 
@@ -10,14 +12,24 @@ hosts/<hostname>/          # host-specific config + hardware-configuration.nix
 
 Boot the NixOS minimal ISO (UEFI), connect to the network (`nmtui`), then:
 
+Target is the Intel 512 GB SSD. Do NOT touch the Crucial 1 TB data SSD
+(`CT1000P3SSD8`); it is mounted at `/run/media/ssd2` by the config.
+`/dev/nvmeXn1` names can swap between boots, so use the stable by-id path.
+
 ```sh
-# 1. Partition (DESTROYS the disk — check the device with lsblk first)
-sudo parted /dev/nvme0n1 -- mklabel gpt
-sudo parted /dev/nvme0n1 -- mkpart ESP fat32 1MiB 1GiB
-sudo parted /dev/nvme0n1 -- set 1 esp on
-sudo parted /dev/nvme0n1 -- mkpart root ext4 1GiB 100%
-sudo mkfs.fat -F 32 -n NIXBOOT /dev/nvme0n1p1
-sudo mkfs.ext4 -L NIXROOT /dev/nvme0n1p2
+# 0. Identify the disk: the INTEL one, 476.9G
+lsblk -o NAME,SIZE,MODEL
+ls -l /dev/disk/by-id/ | grep -v part
+DISK=/dev/disk/by-id/nvme-INTEL_SSDPEKNU512GZ_BTKA11110RL2512A
+
+# 1. Partition (DESTROYS everything on $DISK)
+sudo parted "$DISK" -- mklabel gpt
+sudo parted "$DISK" -- mkpart ESP fat32 1MiB 1GiB
+sudo parted "$DISK" -- set 1 esp on
+sudo parted "$DISK" -- mkpart root ext4 1GiB 100%
+sudo udevadm settle
+sudo mkfs.fat -F 32 -n NIXBOOT "$DISK-part1"
+sudo mkfs.ext4 -L NIXROOT "$DISK-part2"
 
 # 2. Mount
 sudo mount /dev/disk/by-label/NIXROOT /mnt
@@ -45,6 +57,7 @@ nix flake update            # bump inputs, then rebuild
 
 ## Adding a host
 
-1. `mkdir hosts/<name>` with a `default.nix` (host-specific settings + `system.stateVersion`)
-   and its `hardware-configuration.nix`.
+1. `mkdir hosts/<name>` with a `default.nix` (host-specific settings, one desktop import
+   such as `../../modules/nixos/desktop/plasma.nix`, `system.stateVersion`) and its
+   `hardware-configuration.nix`.
 2. Add `<name> = mkHost { hostname = "<name>"; };` to `nixosConfigurations` in `flake.nix`.
