@@ -10,6 +10,11 @@
       ];
       auto-optimise-store = true;
       trusted-users = [ "@wheel" ];
+      # Prebuilt CUDA packages (e.g. ollama-cuda); unfree, so not on cache.nixos.org.
+      extra-substituters = [ "https://cache.nixos-cuda.org" ];
+      extra-trusted-public-keys = [
+        "cache.nixos-cuda.org:74DUi4Ye579gUqzH4ziL9IyiJBlDpMRn9MBN8oNan9M="
+      ];
     };
 
     gc = {
