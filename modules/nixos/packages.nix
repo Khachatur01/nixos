@@ -2,7 +2,6 @@
 {
   environment.systemPackages = with pkgs; [
     curl
-    git
     htop
     pciutils
     usbutils
@@ -11,4 +10,5 @@
   ];
 
   programs.zsh.enable = true;
+  programs.firefox.enable = true;
 }
