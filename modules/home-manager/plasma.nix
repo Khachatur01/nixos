@@ -12,5 +12,7 @@
     input.keyboard.options = [ "grp:win_space_toggle" ];
     input.keyboard.switchingPolicy = "window";
     input.keyboard.numlockOnStartup = "on";
+
+    configFile."plasmanotifyrc"."Notifications"."PopupPosition" = "TopRight";
   };
 }
