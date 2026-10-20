@@ -7,7 +7,10 @@
     useUserPackages = true;
     backupFileExtension = "backup";
     users.${username} = {
-      imports = [ ../home-manager ];
+      imports = [
+        inputs.plasma-manager.homeModules.plasma-manager
+        ../home-manager
+      ];
       home.username = username;
       home.homeDirectory = "/home/${username}";
     };

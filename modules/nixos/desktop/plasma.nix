@@ -6,4 +6,6 @@
     enable = true;
     wayland.enable = true;
   };
+
+  home-manager.sharedModules = [ ../../home-manager/plasma.nix ];
 }
