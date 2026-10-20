@@ -42,6 +42,10 @@
   };
 
   # ASUS laptop tooling (fan profiles, keyboard backlight, charge limit).
+  # asusd's sandboxing (ProtectSystem=strict) requires /etc/asusd to exist
+  # beforehand; it never creates it itself, so the service fails to start
+  # on a fresh install without this.
+  systemd.tmpfiles.rules = [ "d /etc/asusd 0755 root root -" ];
   services.asusd.enable = true;
   services.power-profiles-daemon.enable = true;
 
