@@ -21,6 +21,23 @@
         "type": "github"
       }
     },
+    "local-ai-agent": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1792657085,
+        "narHash": "sha256-jN4fb2MNUncfBn9dS6LgeuKM74n919eWgxX8pfBgRCg=",
+        "path": "/run/media/ssd2/self/projects/personal/local-ai-agent",
+        "type": "path"
+      },
+      "original": {
+        "path": "/run/media/ssd2/self/projects/personal/local-ai-agent",
+        "type": "path"
+      }
+    },
     "nixos-hardware": {
       "inputs": {
         "nixpkgs": [
@@ -83,6 +100,7 @@
     "root": {
       "inputs": {
         "home-manager": "home-manager",
+        "local-ai-agent": "local-ai-agent",
         "nixos-hardware": "nixos-hardware",
         "nixpkgs": "nixpkgs",
         "plasma-manager": "plasma-manager"

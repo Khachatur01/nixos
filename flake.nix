@@ -16,6 +16,12 @@
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.home-manager.follows = "home-manager";
     };
+    # Local agentic development: Claude Code on a locally served model.
+    # A path input, so /run/media/ssd2 has to be mounted to rebuild.
+    local-ai-agent = {
+      url = "path:/run/media/ssd2/self/projects/personal/local-ai-agent";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =

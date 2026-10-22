@@ -4,7 +4,7 @@
 flake.nix                  # inputs + mkHost helper, one entry per host
 modules/nixos/             # shared modules imported by every host (all are workstations)
 modules/nixos/desktop/     # desktop environments; each host imports one (plasma or gnome)
-modules/nixos/programs/    # apps/services every host gets (steam, kdeconnect)
+modules/nixos/programs/    # apps/services every host gets (steam, kdeconnect, local-ai-agent)
 modules/home-manager/      # per-user dotfiles/config, applied to `username` via home-manager
 hosts/<hostname>/          # host-specific config + hardware-configuration.nix
 ```
