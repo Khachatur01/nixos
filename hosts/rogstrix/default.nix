@@ -12,7 +12,15 @@
   ];
 
   hardware.enableRedistributableFirmware = true; # MT7921 Wi-Fi, AMD microcode
-  hardware.bluetooth.enable = true;
+  hardware.bluetooth = {
+    enable = true;
+    powerOnBoot = true;
+    settings = {
+      General = {
+        Experimental = true; # Helps with some modern devices/controllers
+      };
+    };
+  };
 
   # Second NVMe (Crucial P3 1TB) with personal data; kept across reinstalls.
   fileSystems."/run/media/ssd2" = {
