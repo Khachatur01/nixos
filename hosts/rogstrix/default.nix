@@ -49,9 +49,6 @@
   services.asusd.enable = true;
   services.power-profiles-daemon.enable = true;
 
-  # Run Ollama on the NVIDIA dGPU.
-  services.ollama.package = pkgs.ollama-cuda;
-
   # Set at install time, never change afterwards. See `man configuration.nix`.
   system.stateVersion = "26.05";
 }

@@ -14,5 +14,21 @@
     input.keyboard.numlockOnStartup = "on";
 
     configFile."plasmanotifyrc"."Notifications"."PopupPosition" = "TopRight";
+
+    # Locking the screen must not suspend the system (so background work
+    # keeps running); only closing the lid should suspend, and not even
+    # then if an external monitor is connected (docked).
+    powerdevil = {
+      AC = {
+        autoSuspend.action = "nothing";
+        whenLaptopLidClosed = "sleep";
+        inhibitLidActionWhenExternalMonitorConnected = true;
+      };
+      battery = {
+        autoSuspend.action = "nothing";
+        whenLaptopLidClosed = "sleep";
+        inhibitLidActionWhenExternalMonitorConnected = true;
+      };
+    };
   };
 }
