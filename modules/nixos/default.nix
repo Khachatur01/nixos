@@ -6,6 +6,7 @@
     ./home-manager.nix
     ./locale.nix
     ./networking.nix
+    ./wireguard.nix
     ./nix.nix
     ./packages.nix
     ./programs
