@@ -5,5 +5,6 @@
     kdePackages.krdc
     telegram-desktop
     claude-code
+    harmonoid
   ];
 }
