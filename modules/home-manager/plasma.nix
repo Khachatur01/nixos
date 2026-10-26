@@ -1,6 +1,18 @@
+{ config, ... }:
 {
   programs.plasma = {
     enable = true;
+
+    # KRDP authenticates the logged-in user through PAM. Point it at the
+    # certificate managed by the NixOS KRDP service instead of the one-day
+    # certificate the KCM generates.
+    configFile."krdpserverrc"."General" = {
+      SystemUserEnabled = true;
+      Users = "";
+      Certificate = "${config.home.homeDirectory}/.local/share/krdpserver/krdp.crt";
+      CertificateKey = "${config.home.homeDirectory}/.local/share/krdpserver/krdp.key";
+    };
+
     input.keyboard.layouts = [
       { layout = "us"; }
       {
