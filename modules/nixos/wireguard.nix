@@ -109,7 +109,12 @@ in
     after = [ "nm-file-secret-agent.service" ];
   };
 
-  # Permit incoming SSH only through the WireGuard interface.
-  services.openssh.enable = true;
+  # Permit incoming SSH only through the WireGuard interface. openssh opens
+  # port 22 on every interface by default, so disable that and rely on the
+  # interface-specific rule below.
+  services.openssh = {
+    enable = true;
+    openFirewall = false;
+  };
   networking.firewall.interfaces.wg0.allowedTCPPorts = [ 22 ];
 }
