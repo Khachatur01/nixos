@@ -7,11 +7,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1793353701,
-        "narHash": "sha256-XCcm6CrRZPe/eWCdQE1sNBEd8dc1uWeHthwo/f7BSxU=",
+        "lastModified": 1793356515,
+        "narHash": "sha256-uRGX5SkCAhtSW4DbEvDZhwPZFyGBv46C/MpWVMen7NE=",
         "owner": "Khachatur01",
         "repo": "ensemble",
-        "rev": "f255c2f9e0c8ea898e5a17a0d263a5282f9299f9",
+        "rev": "83dc1d0ddc1cd616d74f2faedf2339dd6aff6579",
         "type": "github"
       },
       "original": {
