@@ -27,6 +27,23 @@
 
     configFile."plasmanotifyrc"."Notifications"."PopupPosition" = "TopRight";
 
+    # Treat the conky window as a desktop widget so "Peek at Desktop" and
+    # "Show Desktop" don't hide it (type 1 = NET::Desktop).
+    window-rules = [
+      {
+        description = "Conky as desktop window";
+        match.window-class = {
+          value = "conky";
+          type = "substring";
+          match-whole = false;
+        };
+        apply.type = {
+          value = 1;
+          apply = "force";
+        };
+      }
+    ];
+
     # Turn the wallet subsystem off, so nothing offers to store secrets in it
     # and the first-use wizard never appears.
     configFile."kwalletrc"."Wallet" = {

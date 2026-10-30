@@ -1,6 +1,7 @@
 { ... }:
 {
   imports = [
+    ./conky.nix
     ./git.nix
     ./packages.nix
     ./zed.nix
