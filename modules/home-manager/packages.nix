@@ -7,6 +7,7 @@
     claude-code
     opencode
     harmonoid
+    unsloth-desktop
     inputs.ensemble.packages.${pkgs.stdenv.hostPlatform.system}.default
   ];
 }
