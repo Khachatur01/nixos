@@ -6,6 +6,7 @@
     useGlobalPkgs = true;
     useUserPackages = true;
     backupFileExtension = "backup";
+    extraSpecialArgs = { inherit inputs; };
     users.${username} = {
       imports = [
         inputs.plasma-manager.homeModules.plasma-manager

@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, inputs, ... }:
 {
   home.packages = with pkgs; [
     kdePackages.kcalc
@@ -7,5 +7,6 @@
     claude-code
     opencode
     harmonoid
+    inputs.ensemble.packages.${pkgs.stdenv.hostPlatform.system}.default
   ];
 }
