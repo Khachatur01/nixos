@@ -12,6 +12,10 @@
       share = true;
     };
 
+    shellAliases = {
+      claude-work = "CLAUDE_CONFIG_DIR=$HOME/.claude-work claude";
+    };
+
     oh-my-zsh = {
       enable = true;
       plugins = [ "git" ];

@@ -7,16 +7,32 @@
         ]
       },
       "locked": {
-        "lastModified": 1793373863,
-        "narHash": "sha256-0ayy2zftdCoHhdZEy7sxzaS5QdLGyJKhywxWR2g79AU=",
+        "lastModified": 1793470101,
+        "narHash": "sha256-+6SmRqjbUT77Sf1d4sM/fvvtFobi1EIxz5zDlma8biY=",
         "owner": "Khachatur01",
         "repo": "ensemble",
-        "rev": "f1417ae94271569876756a101520945394adeffc",
+        "rev": "6b97c9346ebce1e14de48deeae6f443d26c83096",
         "type": "github"
       },
       "original": {
         "owner": "Khachatur01",
         "repo": "ensemble",
+        "type": "github"
+      }
+    },
+    "freecad-mcp": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1792890679,
+        "narHash": "sha256-dryocwUb26S1+msUTZDUYGoyizxKuAeqMiTqyD8/ybo=",
+        "owner": "neka-nat",
+        "repo": "freecad-mcp",
+        "rev": "8babe9927ce8e6e8fe7dd6ae2ffa2c93776e845a",
+        "type": "github"
+      },
+      "original": {
+        "owner": "neka-nat",
+        "repo": "freecad-mcp",
         "type": "github"
       }
     },
@@ -103,6 +119,7 @@
     "root": {
       "inputs": {
         "ensemble": "ensemble",
+        "freecad-mcp": "freecad-mcp",
         "home-manager": "home-manager",
         "nixos-hardware": "nixos-hardware",
         "nixpkgs": "nixpkgs",

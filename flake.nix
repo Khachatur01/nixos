@@ -16,6 +16,10 @@
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.home-manager.follows = "home-manager";
     };
+    freecad-mcp = {
+      url = "github:neka-nat/freecad-mcp";
+      flake = false;
+    };
     ensemble = {
       url = "github:Khachatur01/ensemble";
       inputs.nixpkgs.follows = "nixpkgs";
