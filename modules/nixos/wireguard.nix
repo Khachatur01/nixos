@@ -2,6 +2,7 @@
 
 let
   privateKeyFile = "/var/lib/wireguard/rogstrix.key";
+  envFile = "/var/lib/wireguard/rogstrix.env";
   profileName = "Ephen VPN";
   profileUuid = "f7df7904-7b65-3f1c-b9e0-6a84f3cd35c3";
   serverPublicKey = "jKKKOV2fm5p38QmRHyOw4IcLwrvot3CY0DXd8DMOsw8=";
@@ -44,6 +45,10 @@ in
       fi
 
       chmod 0600 "${privateKeyFile}"
+
+      # Env file for ensureProfiles substitution (see below).
+      printf 'WG_PRIVATE_KEY=%s\n' "$(cat "${privateKeyFile}")" > "${envFile}"
+      chmod 0600 "${envFile}"
     '';
   };
 
@@ -62,9 +67,12 @@ in
     };
 
     wireguard = {
-      # The secret agent reads the private key from privateKeyFile.
-      # Do not place the actual private key in the Nix configuration.
-      private-key-flags = 1;
+      # Substituted at activation from envFile. Stored in the NM profile
+      # (not agent-owned) so manual connects from the Plasma applet work:
+      # NM does not query the root-run file secret agent for user-initiated
+      # activations. Do not place the actual key in the Nix configuration.
+      private-key = "$WG_PRIVATE_KEY";
+      private-key-flags = 0;
     };
 
     # NetworkManager keyfile syntax for a WireGuard peer.
@@ -82,31 +90,13 @@ in
     ipv6.method = "disabled";
   };
 
-  # Supply the private key to NetworkManager from the runtime file.
-  networking.networkmanager.ensureProfiles.secrets.entries = [
-    {
-      file = privateKeyFile;
-      key = "private-key";
-      matchId = profileName;
-      matchUuid = profileUuid;
-      matchSetting = "wireguard";
-      matchType = "wireguard";
-    }
-  ];
+  # Supply the private key to the profile from the runtime env file.
+  networking.networkmanager.ensureProfiles.environmentFiles = [ envFile ];
 
-  # The agent reads and validates all secret files when it starts, so the key
-  # must exist first. It must also be registered before the declarative
-  # profile is imported, otherwise NetworkManager asks for a secret while no
-  # agent is connected to D-Bus yet.
-  systemd.services.nm-file-secret-agent = {
+  # The env file must exist before the profile is imported.
+  systemd.services.NetworkManager-ensure-profiles = {
     requires = [ "wireguard-keygen.service" ];
     after = [ "wireguard-keygen.service" ];
-    before = [ "NetworkManager-ensure-profiles.service" ];
-  };
-
-  systemd.services.NetworkManager-ensure-profiles = {
-    requires = [ "nm-file-secret-agent.service" ];
-    after = [ "nm-file-secret-agent.service" ];
   };
 
   # Permit incoming SSH only through the WireGuard interface. openssh opens
