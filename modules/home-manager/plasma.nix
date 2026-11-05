@@ -1,6 +1,8 @@
-{ config, ... }:
+{ config, lib, ... }:
 {
-  programs.plasma = {
+  options.custom.plasma.restoreSession = lib.mkEnableOption "restoring the previous session after login";
+
+  config.programs.plasma = {
     enable = true;
 
     # KRDP authenticates the logged-in user through PAM. Point it at the
@@ -12,6 +14,52 @@
       Certificate = "${config.home.homeDirectory}/.local/share/krdpserver/krdp.crt";
       CertificateKey = "${config.home.homeDirectory}/.local/share/krdpserver/krdp.key";
     };
+
+    # Taskbar. Declaring it makes plasma-manager replace any existing panels.
+    panels = [
+      {
+        location = "bottom";
+        alignment = "center";
+        lengthMode = "fill";
+        hiding = "none";
+        opacity = "adaptive";
+        floating = false;
+        height = 32;
+        widgets = [
+          "org.kde.plasma.kickoff"
+          "org.kde.plasma.pager"
+          {
+            iconTasks.launchers = [
+              "applications:systemsettings.desktop"
+              "applications:org.kde.konsole.desktop"
+              "applications:org.kde.dolphin.desktop"
+              "applications:org.kde.kcalc.desktop"
+              "applications:org.kde.kate.desktop"
+              "applications:dev.zed.Zed.desktop"
+              "applications:firefox.desktop"
+              "applications:org.telegram.desktop.desktop"
+            ];
+          }
+          "org.kde.plasma.marginsseparator"
+          {
+            systemTray.items.shown = [ "org.kde.plasma.battery" ];
+          }
+          {
+            digitalClock = {
+              time = {
+                format = "24h";
+                showSeconds = "always";
+              };
+              date = {
+                enable = true;
+                format.custom = "dd/MM/yyyy";
+              };
+            };
+          }
+          "org.kde.plasma.showdesktop"
+        ];
+      }
+    ];
 
     input.keyboard.layouts = [
       { layout = "us"; }
@@ -27,22 +75,10 @@
 
     configFile."plasmanotifyrc"."Notifications"."PopupPosition" = "TopRight";
 
-    # Treat the conky window as a desktop widget so "Peek at Desktop" and
-    # "Show Desktop" don't hide it (type 1 = NET::Desktop).
-    window-rules = [
-      {
-        description = "Conky as desktop window";
-        match.window-class = {
-          value = "conky";
-          type = "substring";
-          match-whole = false;
-        };
-        apply.type = {
-          value = 1;
-          apply = "force";
-        };
-      }
-    ];
+    # Reopen the previous session's apps at login only when
+    # `custom.plasma.restoreSession` is enabled.
+    configFile."ksmserverrc"."General"."loginMode" =
+      if config.custom.plasma.restoreSession then "restorePreviousLogout" else "emptySession";
 
     # Turn the wallet subsystem off, so nothing offers to store secrets in it
     # and the first-use wizard never appears.

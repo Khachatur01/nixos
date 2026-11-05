@@ -2,7 +2,6 @@
 {
   imports = [
     ./claude-code.nix
-    ./conky.nix
     ./freecad.nix
     ./mcp.nix
     ./git.nix
