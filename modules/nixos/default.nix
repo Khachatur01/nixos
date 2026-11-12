@@ -9,6 +9,7 @@
     ./wireguard.nix
     ./nix.nix
     ./packages.nix
+    ./pki.nix
     ./programs
     ./users.nix
   ];
