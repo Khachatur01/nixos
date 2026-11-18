@@ -6,5 +6,6 @@
     telegram-desktop
     unsloth-desktop
     vlc
+    obsidian
   ];
 }
