@@ -3,6 +3,7 @@
   imports = [
     ./boot.nix
     ./desktop/common.nix
+    ./ensemble.nix
     ./home-manager.nix
     ./locale.nix
     ./networking.nix
