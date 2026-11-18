@@ -6,6 +6,5 @@
     telegram-desktop
     unsloth-desktop
     vlc
-    inputs.ensemble.packages.${pkgs.stdenv.hostPlatform.system}.default
   ];
 }
