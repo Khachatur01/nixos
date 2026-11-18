@@ -15,6 +15,14 @@
       CertificateKey = "${config.home.homeDirectory}/.local/share/krdpserver/krdp.key";
     };
 
+    # Keep the session unlocked so an RDP connection lands directly on the
+    # desktop. KRDP still authenticates the RDP client through PAM; this only
+    # avoids the second, Plasma lock-screen password prompt.
+    configFile."kscreenlockerrc"."Daemon" = {
+      Autolock = false;
+      LockOnStart = false;
+    };
+
     # Taskbar. Declaring it makes plasma-manager replace any existing panels.
     panels = [
       {
