@@ -52,6 +52,13 @@
         runners = { };
         knowledge = {
           vault = "vault";
+          # Each note's vector, so the distiller and recall find notes by
+          # what they mean as well as by their words.
+          embed = {
+            backend = "central";
+            model = "unsloth/embeddinggemma-2-GGUF";
+            min_similarity = 0.5;
+          };
           distill = {
             try = [
               {
