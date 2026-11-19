@@ -2,7 +2,6 @@
   lib,
   pkgs,
   hostname,
-  username,
   ...
 }:
 let
@@ -54,19 +53,6 @@ in
     enable = true;
     wayland.enable = true;
   };
-
-  # KRDP only runs inside a logged-in Plasma session, so without autologin a
-  # reboot leaves the machine at SDDM and unreachable over RDP. Home Manager
-  # keeps the session unlocked, so connecting only asks for the KRDP/PAM
-  # credentials, not a second Plasma lock-screen password.
-  services.displayManager.autoLogin = {
-    enable = true;
-    user = username;
-  };
-
-  # If the session is logged out, log straight back in so RDP stays available
-  # without someone having to log in locally first.
-  services.displayManager.sddm.autoLogin.relogin = true;
 
   # Plasma's RDP server (KRDP) is a per-user service. Start it with the Plasma
   # session and only expose it on the WireGuard interface.
