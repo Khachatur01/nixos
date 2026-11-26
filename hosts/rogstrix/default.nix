@@ -11,6 +11,10 @@
     inputs.nixos-hardware.nixosModules.common-pc-ssd
   ];
 
+  # /tmp in RAM, so it starts empty on every boot.
+  boot.tmp.useTmpfs = true;
+  boot.tmp.tmpfsSize = "50%";
+
   hardware.enableRedistributableFirmware = true; # MT7921 Wi-Fi, AMD microcode
   hardware.bluetooth = {
     enable = true;

@@ -9,6 +9,10 @@
         "flakes"
       ];
       auto-optimise-store = true;
+      # Build on disk, not in /tmp, which is a RAM-backed tmpfs. The daemon
+      # removes each build's dir when it ends; nixpkgs' tmpfiles rule sweeps
+      # up dirs left by a crash after 7 days untouched.
+      build-dir = "/nix/var/nix/builds";
       trusted-users = [ "@wheel" ];
       # Prebuilt CUDA packages unfree, so not on cache.nixos.org.
       extra-substituters = [ "https://cache.nixos-cuda.org" ];
