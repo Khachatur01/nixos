@@ -87,6 +87,15 @@
       "First Use" = false;
     };
 
+    # Lock the screen after 5 idle minutes. Declared explicitly so a stale
+    # `Autolock=false` left in kscreenlockerrc by an earlier generation is
+    # overwritten.
+    kscreenlocker = {
+      autoLock = true;
+      timeout = 5;
+      lockOnResume = true;
+    };
+
     # Locking the screen must not suspend the system (so background work
     # keeps running); only closing the lid should suspend, and not even
     # then if an external monitor is connected (docked).
